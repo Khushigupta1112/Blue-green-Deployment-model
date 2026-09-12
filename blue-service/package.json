@@ -1,0 +1,13 @@
+{
+  "name": "blue-service",
+  "version": "1.0.0",
+  "description": "Blue Deployment Environment - Version 1.0 (Stable)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

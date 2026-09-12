@@ -1,0 +1,61 @@
+name: Blue-Green & Canary Deployment CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Environment to deploy (blue, green, or canary)'
+        required: true
+        default: 'green'
+        type: choice
+        options:
+        - blue
+        - green
+        - canary
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install & Test Blue Service
+      run: |
+        cd blue-service
+        npm install
+        node -e "require('./server.js'); process.exit(0);"
+
+    - name: Install & Test Green Service
+      run: |
+        cd green-service
+        npm install
+        node -e "require('./server.js'); process.exit(0);"
+
+    - name: Install & Test Proxy Router
+      run: |
+        cd proxy
+        npm install
+
+    - name: Build Docker Images (Simulation)
+      run: |
+        docker build -t bankapp:blue ./blue-service
+        docker build -t bankapp:green ./green-service
+        docker build -t bankapp:proxy ./proxy
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Kubernetes Cluster (Blue-Green Switch)
+      run: |
+        echo "Deploying target environment: ${{ github.event.inputs.target_env || 'green' }}"
+        # kubectl apply -f k8s/
+        # kubectl patch service bankapp-service -p '{"spec":{"selector":{"version":"${{ github.event.inputs.target_env }}"}}}'

@@ -1,0 +1,14 @@
+{
+  "name": "blue-green-proxy",
+  "version": "1.0.0",
+  "description": "Smart Dynamic Traffic Router and Telemetry Proxy for Blue-Green Deployment",
+  "main": "router.js",
+  "scripts": {
+    "start": "node router.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "http-proxy": "^1.18.1"
+  }
+}

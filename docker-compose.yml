@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  blue-service:
+    build: ./blue-service
+    container_name: bg-blue-service
+    ports:
+      - "8081:8081"
+    environment:
+      - PORT=8081
+      - ENV_NAME=Blue
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  green-service:
+    build: ./green-service
+    container_name: bg-green-service
+    ports:
+      - "8082:8082"
+    environment:
+      - PORT=8082
+      - ENV_NAME=Green
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  router-proxy:
+    build: ./proxy
+    container_name: bg-router-proxy
+    ports:
+      - "8000:8000"
+    depends_on:
+      - blue-service
+      - green-service
+    environment:
+      - PORT=8000
