@@ -1,7 +1,5 @@
 # Enterprise Blue-Green & Canary Deployment Orchestrator
 
-> **Final-Year Computer Science Project**  
-> An enterprise-grade, zero-downtime deployment platform with dynamic traffic routing, real-time HTTP telemetry, continuous health monitoring, automated rollback engine, chaos engineering fault injector, and visual web control dashboard.
 
 ---
 
@@ -136,18 +134,4 @@ Navigate to:
    - Traffic instantly shifts back 100% to **BLUE**.
    - An alert log appears in the Live Terminal.
 
----
-
-## 🎓 Viva / Presentation Defense Q&A Guide
-
-**Q1: What is the main problem Blue-Green Deployment solves?**  
-*A*: It eliminates downtime during software upgrades and eliminates risk. If the new release (Green) has a bug, traffic can instantly revert to the old release (Blue) without waiting for a re-deployment or build.
-
-**Q2: What is the difference between Blue-Green and Canary Deployment?**  
-*A*: Blue-Green switches 100% of traffic instantly from Blue to Green. Canary deployment slowly routes a small percentage of traffic (e.g. 10% or 20%) to Green first to test performance before rolling out to 100%. Our project supports BOTH strategies!
-
-**Q3: How does your proxy achieve Zero-Downtime?**  
-*A*: The Smart Proxy routes HTTP requests dynamically in-memory based on weight parameters. Changing the routing target does not restart any processes or drop active socket connections.
-
-**Q4: How does automated rollback work in your platform?**  
-*A*: Background health monitors probe `/health` endpoints every 3 seconds. If the error rate exceeds 5% or status codes return 500, the proxy automatically updates its weight state to 100% Blue and logs the incident.
+-
