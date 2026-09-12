@@ -133,5 +133,3 @@ Navigate to:
    - The system triggers an **AUTOMATED ROLLBACK**!
    - Traffic instantly shifts back 100% to **BLUE**.
    - An alert log appears in the Live Terminal.
-
--
